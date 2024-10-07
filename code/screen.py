@@ -73,11 +73,9 @@ class Screen:
                                 self.units.append(index)  # 添加角色
                                 self.selected_indices.add(index)  # 记录已选择的索引
 
-
-                if self.battle:
-                    for index, player in enumerate(self.players):
-                        if player.rect.collidepoint(event.pos):
-                            print(f'选择玩家: {index}')
+                # todo
+                if self.battle: # 玩家选择ai攻击
+                    pass
 
             # 处理文本输入
             for index in range(len(self.rects)):
