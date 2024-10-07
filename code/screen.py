@@ -12,7 +12,7 @@ class Screen:
 
     def __init__(self):
         self.units = [] # 存储选择的单位
-        self.rects = []
+        self.rects = [] # 存储单位选择框
         self.selected_indices = set()  # 用于跟踪已选择的图片索引
         self.names = {}  # 用于存储角色名字
 
@@ -21,6 +21,7 @@ class Screen:
         self.game_started = False # 开始游戏状态
         self.game_loading = False # 加载游戏状态
         self.servant_select = False # 选择单位状态
+        self.battle = False # 战斗状态
 
         self.buttons = [
             Button("Start Game", SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 50, 200, 50),
@@ -72,6 +73,12 @@ class Screen:
                                 self.units.append(index)  # 添加角色
                                 self.selected_indices.add(index)  # 记录已选择的索引
 
+
+                if self.battle:
+                    for index, player in enumerate(self.players):
+                        if player.rect.collidepoint(event.pos):
+                            print(f'选择玩家: {index}')
+
             # 处理文本输入
             for index in range(len(self.rects)):
                 input_box_rect = pygame.Rect(self.rects[index].topleft[0], self.rects[index].bottom + 10, 80,
@@ -91,6 +98,7 @@ class Screen:
 
         if self.battle_scene:
             self.servant_select = False  # 更新游戏状态
+            self.battle = True # 进入战斗场景
             self.show_battle_scene(screen)
         else:
             if self.game_started:
@@ -224,7 +232,7 @@ class Screen:
         if self.player_battle:
             font = pygame.font.Font(None, 30)
             text_surface = font.render(f"player attacker {self.players[self.attacker].name}", True, (255, 255, 255))
-            text_rect = text_surface.get_rect(center=(30, SCREEN_HEIGHT // 2))
+            text_rect = text_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
             screen.blit(text_surface, text_rect)  # 显示战斗场景的文本
 
     def load_images(self):
