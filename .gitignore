@@ -1,0 +1,10 @@
+*.pdf
+/code/*.pyc
+/code/*.pyo
+/code/*.pyd
+/code/__pycache__/
+/code/*.pyi
+/code/*.pyw
+/code/units
+/code/utils
+/.idea
